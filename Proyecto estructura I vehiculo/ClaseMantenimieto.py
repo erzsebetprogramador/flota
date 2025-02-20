@@ -1,5 +1,5 @@
-from datetime import datetime
-from ClaseNodo import Nodomantenimientos
+from datetime import datetime, date
+from ClaseNodo import NodoMantenimiento
 
 class Mantenimientos:
     def __init__(self):
@@ -9,10 +9,10 @@ class Mantenimientos:
 
     def validar_fecha(self, fecha):
         try:
-            return datetime.strptime(fecha, "%Y-%m-%d")
+            return datetime.strptime(fecha, "%Y-%m-%d").date()  
         except ValueError:
             raise ValueError("Formato de fecha inválido. Use YYYY-MM-DD")
-    
+
     def validar_costo(self, costo):
         try:
             costo = float(costo)
@@ -25,7 +25,7 @@ class Mantenimientos:
     def agregar_mantenimiento(self, fecha, descripcion, costo):
         fecha = self.validar_fecha(fecha)
         costo = self.validar_costo(costo)
-        nuevo_mantenimiento = Nodomantenimientos(fecha, descripcion, costo)
+        nuevo_mantenimiento = NodoMantenimiento(fecha, descripcion, costo)
 
         if not self.cabeza:
             self.cabeza = nuevo_mantenimiento
@@ -57,6 +57,6 @@ class Mantenimientos:
         mantenimientos = []
         actual = self.cabeza
         while actual:
-            mantenimientos.append(vars(actual))
+            mantenimientos.append(vars(actual))  
             actual = actual.siguiente
         return mantenimientos
